@@ -1,3 +1,5 @@
+// Author: Albert Pinto
+
 import React from 'react'
 import {
   REGISTER_SUCCESS,
