@@ -1,52 +1,48 @@
 import React, { useState, useContext, useEffect } from 'react'
 import AlertContext from '../../context/alert/alertContext'
 import AuthContext from '../../context/auth/authContext'
-const Register = () => {
+
+const Register = (props) => {
   const alertContext = useContext(AlertContext)
-  const { setAlert } = alertContext
   const authContext = useContext(AuthContext)
-  const { registerUser, error, clearErrors } = authContext
+
+  const { setAlert } = alertContext
+  const { register, error, clearErrors, isAuthenticated } = authContext
 
   useEffect(() => {
-    if (
-      error != null &&
-      error.includes('E11000 duplicate key error collection')
-    ) {
-      setAlert('The User entered, already exists', 'danger')
+    if (isAuthenticated) {
+      props.history.push('/')
+    }
+
+    if (error === 'User already exists') {
+      setAlert(error, 'danger')
       clearErrors()
     }
-  }, [error])
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history])
 
-  const initialState = {
+  const [user, setUser] = useState({
     name: '',
     email: '',
-    token: '',
     password: '',
     password2: '',
-  }
-  const [user, setUser] = useState(initialState)
-  const { name, email, token, password, password2 } = user
-  const onChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value })
-  }
+  })
+
+  const { name, email, password, password2 } = user
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value })
+
   const onSubmit = (e) => {
     e.preventDefault()
-    if (name === '') {
-      setAlert('Please enter Name', 'danger')
-    } else if (email === '') {
-      setAlert('Please enter Email', 'danger')
-    } else if (password === '') {
-      setAlert('Please enter password', 'danger')
-    } else if (password2 === '') {
-      setAlert('Please confirm password', 'danger')
+    if (name === '' || email === '' || password === '') {
+      setAlert('Please enter all fields', 'danger')
     } else if (password !== password2) {
-      setAlert('Password & Confirm Password do not match', 'danger')
+      setAlert('Passwords do not match', 'danger')
     } else {
-      registerUser({
+      register({
         name,
         email,
         password,
-        password2,
       })
     }
   }
@@ -65,6 +61,7 @@ const Register = () => {
             name='name'
             value={name}
             onChange={onChange}
+            required
           />
         </div>
         <div className='form-group'>
@@ -75,6 +72,7 @@ const Register = () => {
             name='email'
             value={email}
             onChange={onChange}
+            required
           />
         </div>
         <div className='form-group'>
@@ -85,6 +83,7 @@ const Register = () => {
             name='password'
             value={password}
             onChange={onChange}
+            required
             minLength='6'
           />
         </div>
@@ -96,6 +95,7 @@ const Register = () => {
             name='password2'
             value={password2}
             onChange={onChange}
+            required
             minLength='6'
           />
         </div>
