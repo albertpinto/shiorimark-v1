@@ -34,8 +34,14 @@ const Register = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    if (name === '' || email === '' || password === '') {
-      setAlert('Please enter all fields', 'danger')
+    if (name === '') {
+      setAlert('Please enter Name', 'danger')
+    } else if (email === '') {
+      setAlert('Please enter Email', 'danger')
+    } else if (password === '') {
+      setAlert('Please enter Password', 'danger')
+    } else if (password2 === '') {
+      setAlert('Please enter Confirm Password', 'danger')
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger')
     } else {
@@ -61,7 +67,6 @@ const Register = (props) => {
             name='name'
             value={name}
             onChange={onChange}
-            required
           />
         </div>
         <div className='form-group'>
@@ -72,7 +77,6 @@ const Register = (props) => {
             name='email'
             value={email}
             onChange={onChange}
-            required
           />
         </div>
         <div className='form-group'>
@@ -83,7 +87,6 @@ const Register = (props) => {
             name='password'
             value={password}
             onChange={onChange}
-            required
             minLength='6'
           />
         </div>
@@ -95,7 +98,6 @@ const Register = (props) => {
             name='password2'
             value={password2}
             onChange={onChange}
-            required
             minLength='6'
           />
         </div>
