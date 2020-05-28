@@ -1,121 +1,97 @@
-import React, { useState, useContext, useEffect } from "react";
-import BookmarkContext from "../../context/bookmark/bookmarkContext";
+import React, { useState, useContext, useEffect } from 'react'
+import BookmarkContext from '../../context/bookmark/bookmarkContext'
 
 const BookmarkForm = () => {
-  const bookmarkContext = useContext(BookmarkContext);
-  const {
-    addBookmark,
-    updateBookmark,
-    current,
-    clearCurrent,
-  } = bookmarkContext;
+  const bookmarkContext = useContext(BookmarkContext)
+  const { addBookmark, updateBookmark, current, clearCurrent } = bookmarkContext
   useEffect(() => {
     if (current !== null) {
-      setBookmark(current);
+      setBookmark(current)
     } else {
       setBookmark({
-        id: "",
-        url: "",
-        title: "",
-        category: "",
-        body: "",
-        created: "",
-        user_id: "",
-      });
+        url: '',
+        title: '',
+        category: '',
+        body: '',
+      })
     }
-  }, [bookmarkContext, current]);
+  }, [bookmarkContext, current])
   const [bookmark, setBookmark] = useState({
-    id: "",
-    url: "",
-    title: "",
-    category: "",
-    body: "",
-    created: "",
-    user_id: "",
-  });
-  const { id, url, title, category, body, created, user_id } = bookmark;
+    url: '',
+    title: '',
+    category: '',
+    body: '',
+  })
+  const { url, title, category, body } = bookmark
   const onChange = (e) => {
-    e.preventDefault();
-    setBookmark({ ...bookmark, [e.target.name]: e.target.value });
-  };
+    e.preventDefault()
+    setBookmark({ ...bookmark, [e.target.name]: e.target.value })
+  }
 
   const onSubmit = (e) => {
-    e.preventDefault();
-    console.log("onSubmit:", bookmark);
+    e.preventDefault()
+    console.log('onSubmit:', bookmark)
     if (current) {
-      updateBookmark(bookmark);
+      updateBookmark(bookmark)
     } else {
-      addBookmark(bookmark);
+      addBookmark(bookmark)
     }
-    clearAll();
-  };
+    clearAll()
+  }
   const clearAll = () => {
-    clearCurrent();
-  };
+    clearCurrent()
+  }
   return (
     <form onSubmit={onSubmit}>
-      <h1 className="text-primary">
-        {current ? "Edit Bookmark" : "Add Bookmark"}
+      <h1 className='text-primary'>
+        {current ? 'Edit Bookmark' : 'Add Bookmark'}
       </h1>
       <input
-        type="text"
-        placeholder="Url"
-        name="url"
+        type='text'
+        placeholder='Url'
+        name='url'
         value={url}
         onChange={onChange}
       />
       <input
-        type="text"
-        placeholder="Title"
-        name="title"
+        type='text'
+        placeholder='Title'
+        name='title'
         value={title}
         onChange={onChange}
       />
       <input
-        type="text"
-        placeholder="Category"
-        name="category"
+        type='text'
+        placeholder='Category'
+        name='category'
         value={category}
         onChange={onChange}
       />
       <input
-        type="text"
-        placeholder="Body"
-        name="body"
+        type='text'
+        placeholder='Body'
+        name='body'
         value={body}
         onChange={onChange}
       />
-      <input
-        type="text"
-        placeholder="created"
-        name="created"
-        value={created}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        placeholder="user_id"
-        name="user_id"
-        value={user_id}
-        onChange={onChange}
-      />
+
       <div>
         <input
-          type="submit"
-          value={current ? "Update Bookmark" : "Add Bookmark"}
-          className="btn btn-primary btn-block"
+          type='submit'
+          value={current ? 'Update Bookmark' : 'Add Bookmark'}
+          className='btn btn-primary btn-block'
         />
       </div>
 
       {current && (
         <div>
-          <button className="btn btn-light btn-block" onClick={clearAll}>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
             Clear
           </button>
         </div>
       )}
     </form>
-  );
-};
+  )
+}
 
-export default BookmarkForm;
+export default BookmarkForm

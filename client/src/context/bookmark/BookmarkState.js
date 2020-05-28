@@ -1,8 +1,9 @@
-import react, { useReducer } from 'react'
-import { v4 as uuid } from 'uuid'
+import React, { useReducer } from 'react'
 import BookmarkContext from './bookmarkContext'
 import bookmarkReducer from './bookmarkReducer'
+import axios from 'axios'
 import {
+  GET_BOOKMARK,
   ADD_BOOKMARK,
   DELETE_BOOKMARK,
   SET_CURRENT,
@@ -11,64 +12,58 @@ import {
   FILTER_BOOKMARKS,
   CLEAR_FILTER,
   CLEAR_BOOKMARKS,
+  BOOKMARK_ERROR,
 } from '../types'
-import React from 'react'
 
 const BookmarkState = (props) => {
   const initialState = {
-    bookmarks: [
-      {
-        id: 1,
-        url: 'http://mail.yahoo.com',
-        title: 'Personal email',
-        category: 'Email',
-        body:
-          'Lorem 1 ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa nam cumque voluptatum. Possimus recusandae porro architecto officiis illo dignissimos ratione aut officia reprehenderit! Iure cum numquam fugit doloremque quis ullam illo odit, odio voluptates non quisquam laboriosam consectetur quasi perspiciatis! Sapiente minus aperiam nobis molestias autem ut praesentium laudantium?',
-        created: '5/10/2020',
-        user_id: '5ea9302a4422f7361c8ae959',
-      },
-      {
-        id: 2,
-        url: 'http://www.emc.com',
-        title: 'My former companys website',
-        category: 'company website',
-        body:
-          'Lorem 2 ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa nam cumque voluptatum. Possimus recusandae porro architecto officiis illo dignissimos ratione aut officia reprehenderit! Iure cum numquam fugit doloremque quis ullam illo odit, odio voluptates non quisquam laboriosam consectetur quasi perspiciatis! Sapiente minus aperiam nobis molestias autem ut praesentium laudantium?',
-        created: '5/10/2020',
-        user_id: '5ea9302a4422f7361c8ae958',
-      },
-      {
-        id: 3,
-        url: 'http://supportvectors.com',
-        title: 'My current company',
-        category: 'company website',
-        body:
-          'Lorem 3 ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa nam cumque voluptatum. Possimus recusandae porro architecto officiis illo dignissimos ratione aut officia reprehenderit! Iure cum numquam fugit doloremque quis ullam illo odit, odio voluptates non quisquam laboriosam consectetur quasi perspiciatis! Sapiente minus aperiam nobis molestias autem ut praesentium laudantium?',
-        created: '5/10/2020',
-        user_id: '5ea9302a4422f7361c8ae957',
-      },
-      {
-        id: 4,
-        url: 'http://udemy.com',
-        title: 'Technical training website',
-        category: 'Online Education',
-        body:
-          'Lorem 4 ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa nam cumque voluptatum. Possimus recusandae porro architecto officiis illo dignissimos ratione aut officia reprehenderit! Iure cum numquam fugit doloremque quis ullam illo odit, odio voluptates non quisquam laboriosam consectetur quasi perspiciatis! Sapiente minus aperiam nobis molestias autem ut praesentium laudantium?',
-        created: '5/10/2020',
-        user_id: '5ea9302a4422f7361c8ae956',
-      },
-    ],
+    bookmarks: null,
     current: null,
     filtered: null,
+    error: null,
+    loading: true,
   }
 
   const [state, dispatch] = useReducer(bookmarkReducer, initialState)
   console.log('dispatch :', dispatch)
+  // get Bookmarks
+
+  const getBookmarks = async () => {
+    try {
+      const res = await axios.get('/api/bookmarks')
+
+      dispatch({
+        type: GET_BOOKMARK,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: BOOKMARK_ERROR,
+        payload: err.response.msg,
+      })
+    }
+  }
+
   // Add Bookmark
-  const addBookmark = (bookmark) => {
-    bookmark.id = uuid()
-    console.log('addBookmark:', bookmark.id)
-    dispatch({ type: ADD_BOOKMARK, payload: bookmark })
+
+  const addBookmark = async (bookmark) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      const res = await axios.post('/api/bookmarks', bookmark, config)
+      dispatch({
+        type: ADD_BOOKMARK,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: BOOKMARK_ERROR,
+        payload: err.response.msg,
+      })
+    }
   }
 
   //Update Bookmark
@@ -107,6 +102,8 @@ const BookmarkState = (props) => {
         bookmarks: state.bookmarks,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
+        getBookmarks,
         addBookmark,
         updateBookmark,
         deleteBookmark,

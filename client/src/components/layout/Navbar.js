@@ -2,10 +2,13 @@ import React, { Fragment, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/auth/authContext'
+import BookmarkContext from '../../context/bookmark/bookmarkContext'
 
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext)
+  const bookmarkContext = useContext(BookmarkContext)
   const { isAuthenticated, logout, loadUser, user } = authContext
+  const { clearBookmarks } = bookmarkContext
 
   useEffect(() => {
     loadUser()
@@ -14,6 +17,7 @@ const Navbar = ({ title, icon }) => {
 
   const onLogout = () => {
     logout()
+    clearBookmarks()
   }
 
   const authLinks = (
