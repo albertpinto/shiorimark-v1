@@ -25,7 +25,7 @@ const BookmarkState = (props) => {
   }
 
   const [state, dispatch] = useReducer(bookmarkReducer, initialState)
-  console.log('dispatch :', dispatch)
+
   // get Bookmarks
 
   const getBookmarks = async () => {

@@ -74,7 +74,6 @@ export default (state, action) => {
         loading: false,
       }
     case CLEAR_BOOKMARKS: {
-      console.log('Clear_bookmarks reducer case fired!')
       return {
         ...state,
         bookmarks: null,

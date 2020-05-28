@@ -5,7 +5,6 @@ const BookmarkItem = ({ bookmark }) => {
   const bookmarkContext = useContext(BookmarkContext)
   const { deleteBookmark, setCurrent, clearCurrent } = bookmarkContext
   const { _id, title, url, body, category, created, user_id } = bookmark
-  console.log('bookmark:', bookmark)
   const onDelete = () => {
     //window.alert(`Ondelete:${id}`);
     deleteBookmark(_id)
@@ -47,15 +46,3 @@ const BookmarkItem = ({ bookmark }) => {
 }
 
 export default BookmarkItem
-//<span style={{ float: "left" }}className="badge-primary">
-// <tr>
-// <td>{id}</td>
-// <td>{title}</td>
-// <td>{category}</td>
-// <td>{created}</td>
-// <td>
-//   <a href="details.html" class="btn btn-secondary">
-//     <i class="fas fa-angle-double-right"></i> Details
-//   </a>
-// </td>
-// </tr>

@@ -30,7 +30,6 @@ const BookmarkForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('onSubmit:', bookmark)
     if (current) {
       updateBookmark(bookmark)
     } else {
