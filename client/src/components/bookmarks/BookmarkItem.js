@@ -4,14 +4,14 @@ import BookmarkContext from '../../context/bookmark/bookmarkContext'
 const BookmarkItem = ({ bookmark }) => {
   const bookmarkContext = useContext(BookmarkContext)
   const { deleteBookmark, setCurrent, clearCurrent } = bookmarkContext
-  const { _id, title, url, body, category, created, user_id } = bookmark
+  const { _id, title, url, body, category } = bookmark
   const onDelete = () => {
     //window.alert(`Ondelete:${id}`);
     deleteBookmark(_id)
     clearCurrent()
   }
   return (
-    <React.Fragment>
+    <Fragment>
       <div key={_id} className='card bg-light'>
         <h3 className='text-primary text-left'>
           <span className='badge-primary'>{title}</span>
@@ -41,7 +41,7 @@ const BookmarkItem = ({ bookmark }) => {
           </button>
         </p>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

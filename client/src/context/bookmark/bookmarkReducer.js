@@ -22,14 +22,15 @@ export default (state, action) => {
     case ADD_BOOKMARK:
       return {
         ...state,
-        bookmarks: [...state.bookmarks, action.payload],
+        // Switched to add payload to the front
+        bookmarks: [action.payload, ...state.bookmarks],
         loading: false,
       }
     case UPDATE_BOOKMARK:
       return {
         ...state,
         bookmarks: state.bookmarks.map((bookmark) =>
-          bookmark.id === action.payload.id ? action.payload : bookmark
+          bookmark._id === action.payload._id ? action.payload : bookmark
         ),
         loading: false,
       }
@@ -37,7 +38,7 @@ export default (state, action) => {
       return {
         ...state,
         bookmarks: state.bookmarks.filter(
-          (bookmark) => bookmark.id !== action.payload
+          (bookmark) => bookmark._id !== action.payload
         ),
         loading: false,
       }

@@ -68,14 +68,50 @@ const BookmarkState = (props) => {
 
   //Update Bookmark
 
-  const updateBookmark = (bookmark) => {
-    dispatch({ type: UPDATE_BOOKMARK, payload: bookmark })
+  const updateBookmark = async (bookmark) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    try {
+      const res = await axios.patch(
+        `/api/bookmarks/${bookmark._id}`,
+        bookmark,
+        config
+      )
+
+      dispatch({
+        type: UPDATE_BOOKMARK,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: BOOKMARK_ERROR,
+        payload: err.response.msg,
+      })
+    }
   }
 
   //Delete Bookmark
-  const deleteBookmark = (id) => {
-    dispatch({ type: DELETE_BOOKMARK, payload: id })
+
+  const deleteBookmark = async (id) => {
+    try {
+      await axios.delete(`/api/bookmarks/${id}`)
+
+      dispatch({
+        type: DELETE_BOOKMARK,
+        payload: id,
+      })
+    } catch (err) {
+      dispatch({
+        type: BOOKMARK_ERROR,
+        payload: err.response.msg,
+      })
+    }
   }
+
   //Set Current Bookmark
 
   const setCurrent = (bookmark) => {
