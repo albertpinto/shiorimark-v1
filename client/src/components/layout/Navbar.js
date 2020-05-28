@@ -5,20 +5,22 @@ import AuthContext from '../../context/auth/authContext'
 
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext)
-  const { isAuthenticated, logout, loadUser } = authContext
-  let { user } = authContext
-  console.log('user before load', user !== null ? user : 'User is null')
+  const { isAuthenticated, logout, loadUser, user } = authContext
+
   useEffect(() => {
     loadUser()
     // eslint-disable-next-line
   }, [])
-  console.log('user after load', user !== null ? user : 'User is null')
+
   const onLogout = () => {
     logout()
   }
 
   const authLinks = (
     <Fragment>
+      <li>
+        <Link to='/about'>About</Link>
+      </li>
       <li>Hello {user && user.name}</li>
       <li>
         <a onClick={onLogout} href='#!'>
