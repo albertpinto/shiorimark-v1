@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://scott:tiger@shiorimark-ogbhf.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtsecret": "shiorimark"
+}

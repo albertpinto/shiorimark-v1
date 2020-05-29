@@ -1,3 +1,5 @@
+// Author: Albert Pinto
+
 import React from 'react'
 import {
   REGISTER_SUCCESS,
@@ -12,6 +14,13 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload,
+      }
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token)
