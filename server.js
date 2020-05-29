@@ -30,6 +30,3 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   )
 }
-
-// // Just for testing
-// app.get('/', (req, res) => res.send({ msg: 'Welcome to Shiorimark!' }))
