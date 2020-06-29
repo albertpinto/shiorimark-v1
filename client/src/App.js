@@ -18,7 +18,54 @@ import Login from './components/auth/Login'
 import AlertState from './context/alert/AlertState'
 import Alerts from './components/layout/Alerts'
 import PrivateRoute from './components/routing/PrivateRoute'
+import { connect, Provider } from 'react-redux'
+import store from '../src/store'
 
+const App = () => {
+  return (
+    <Provider store={store}>
+      <AuthState>
+        <BookmarkState>
+          <CategoryState>
+            <AlertState>
+              <Router>
+                <Fragment>
+                  <Navbar title='Shiorimark' icon='fa fa-bookmark-o' />
+                  <div className='container'>
+                    <Alerts />
+                    <Switch>
+                      <PrivateRoute exact path='/' component={Home} />
+                      <PrivateRoute exact path='/home' component={Home} />
+                      <PrivateRoute exact path='/about' component={About} />
+                      <Route
+                        exact
+                        path='/register'
+                        component={Register}
+                      ></Route>
+                      <Route exact path='/login' component={Login}></Route>
+                      <Route
+                        exact
+                        path='/bookmarks'
+                        component={Bookmarks}
+                      ></Route>
+                      <Route
+                        exact
+                        path='/categories'
+                        component={CategoriesPage}
+                      ></Route>
+                      <Route exact path='/users' component={Users} />
+                      <Route component={NotFound} />
+                    </Switch>
+                  </div>
+                  <Footer />
+                </Fragment>
+              </Router>
+            </AlertState>
+          </CategoryState>
+        </BookmarkState>
+      </AuthState>
+    </Provider>
+=======
 const App = () => {
   return (
     <AuthState>
