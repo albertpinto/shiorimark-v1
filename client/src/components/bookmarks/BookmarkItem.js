@@ -2,7 +2,6 @@ import React, { Fragment, useContext } from 'react'
 import BookmarkContext from '../../context/bookmark/bookmarkContext'
 
 const BookmarkItem = ({ bookmark }) => {
-  console.log('bookmarkItem:', bookmark)
   const bookmarkContext = useContext(BookmarkContext)
   const { deleteBookmark, setCurrent, clearCurrent } = bookmarkContext
   const { _id, title, url, body, category } = bookmark
